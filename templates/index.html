@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fatigue Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">🧠 Multimodal Fatigue Detection Dashboard</h1>
+
+    <form method="POST" enctype="multipart/form-data" class="card p-4 mb-4">
+        <h5 class="card-title">📤 Upload Behavior File</h5>
+        <input type="file" name="behavior_file" class="form-control mb-3" required>
+        <button name="upload_behavior" class="btn btn-warning">Upload</button>
+    </form>
+
+    <form method="POST" class="d-grid gap-2">
+        <button name="start_detection" class="btn btn-primary">🔍 Start Detection</button>
+        <button name="export_pdf" class="btn btn-danger">📄 Export PDF Report</button>
+        <button name="export_csv" class="btn btn-info">🧾 Export CSV Data</button>
+        <button name="trend_graph" class="btn btn-secondary">📈 Show Trend Graph</button>
+        <button name="bar_graph" class="btn btn-dark">📊 Show Bar Graph</button>
+        <a href="/exit" class="btn btn-outline-danger">🚪 Exit</a>
+    </form>
+
+    {% if result %}
+        <div class="alert alert-success mt-4">
+            <strong>Prediction Result:</strong> {{ result }}
+        </div>
+    {% endif %}
+
+    {% if graph %}
+        <div class="mt-4">
+            <h5>Fatigue Trend Graph:</h5>
+            <img src="{{ graph }}" class="img-fluid rounded shadow">
+        </div>
+    {% endif %}
+
+    {% if bar %}
+        <div class="mt-4">
+            <h5>Prediction Bar Graph:</h5>
+            <img src="{{ bar }}" class="img-fluid rounded shadow">
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
+
