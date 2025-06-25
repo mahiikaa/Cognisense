@@ -67,6 +67,8 @@ A Flask-based multimodal fatigue detection web application using **facial analys
 ![Screenshot 2025-06-25 173442](https://github.com/user-attachments/assets/1565c32b-696c-4e2a-95a0-aa400567376a)
 ![Screenshot 2025-06-25 173521](https://github.com/user-attachments/assets/fe62af63-cda2-4bfe-b5be-e8934ea1eb6d)
 ![Screenshot 2025-06-25 173612](https://github.com/user-attachments/assets/1b1b703e-deb7-46fb-a2b6-77c96d566310)
+![Screenshot 2025-06-25 181323](https://github.com/user-attachments/assets/647de96b-fd80-4f57-b7b1-a2a875429a12)
+![Screenshot 2025-06-25 181413](https://github.com/user-attachments/assets/7071f30c-40ab-4f4e-90a8-94220cd794f5)
 ![Screenshot 2025-06-25 173819](https://github.com/user-attachments/assets/7c305a19-32dc-4bee-b4a0-1a16369d99d5)
 ![Screenshot 2025-06-25 173839](https://github.com/user-attachments/assets/31bb9357-49c9-4ca8-a936-bb40d1adcfba)
 ![Screenshot 2025-06-25 173900](https://github.com/user-attachments/assets/ae80962b-3267-428a-8975-73627fd8aa2f)
