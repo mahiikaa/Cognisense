@@ -1,3 +1,0 @@
-not fatigued (face)
-fatigued (voice)
-fatigued (behavior)

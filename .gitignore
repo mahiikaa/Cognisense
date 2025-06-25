@@ -1,0 +1,20 @@
+# Ignore build and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.exe
+*.spec
+*.zip
+
+# Ignore model data, results, and generated outputs
+/results/
+/build/
+/dist/
+*.pdf
+*.csv
+*.png
+
+# Ignore system files
+.DS_Store
+desktop.ini
