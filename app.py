@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, send_file, redirect, url_for
-from model.face_camera import detect_eye_closure
+from flask import Flask, render_template, request, send_file, redirect, url_for, jsonify
+from model.face_camera import detect_eye_closure_from_image, detect_eye_closure
 from model.voice_mic import capture_voice_input
 from model.behavior_reader import read_behavior_info
 from multimodal_fatigue_pipeline import MultimodalFatigueModel
@@ -15,15 +15,12 @@ import json
 app = Flask(__name__)
 model = MultimodalFatigueModel()
 
-# Create folders if not exist
 os.makedirs("results", exist_ok=True)
 os.makedirs("uploads", exist_ok=True)
 os.makedirs("static", exist_ok=True)
 
-# Global variable to store behavior file path
 behavior_file_path = ""
 
-# Log predictions to CSV
 def log_prediction_to_csv(mode, prediction):
     filename = "results/history.csv"
     file_exists = os.path.isfile(filename)
@@ -33,7 +30,6 @@ def log_prediction_to_csv(mode, prediction):
             writer.writerow(["timestamp", "mode", "prediction"])
         writer.writerow([datetime.now().strftime("%Y-%m-%d %H:%M:%S"), mode, prediction])
 
-# Register route
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -57,7 +53,6 @@ def register():
 
     return render_template("register.html")
 
-# Login route
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -74,7 +69,6 @@ def login():
 
     return render_template("login.html")
 
-# Home Route - Main Dashboard
 @app.route("/", methods=["GET", "POST"])
 def dashboard():
     global behavior_file_path
@@ -88,6 +82,14 @@ def dashboard():
             if uploaded_file:
                 behavior_file_path = os.path.join("uploads", uploaded_file.filename)
                 uploaded_file.save(behavior_file_path)
+
+        elif "upload_face_image" in request.form:
+            image_file = request.files["face_image"]
+            if image_file:
+                img_path = os.path.join("uploads", image_file.filename)
+                image_file.save(img_path)
+                result = detect_eye_closure_from_image(img_path)
+                log_prediction_to_csv("face-image", result)
 
         elif "start_detection" in request.form:
             face = detect_eye_closure()
@@ -152,7 +154,10 @@ def dashboard():
 
     return render_template("index.html", result=result, graph=graph, bar=bar)
 
-# Exit Page
+@app.route("/webcam")
+def webcam_page():
+    return render_template("webcam.html")
+
 @app.route("/exit")
 def exit_app():
     return render_template("goodbye.html")

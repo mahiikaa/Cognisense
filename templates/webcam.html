@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Webcam Fatigue Detection</title>
+  <script defer>
+    async function captureAndSend() {
+      const canvas = document.getElementById("snapshot");
+      const video = document.getElementById("video");
+      canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg'));
+      
+      const formData = new FormData();
+      formData.append("image", blob, "webcam.jpg");
+
+      const response = await fetch("/upload_webcam_image", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+      document.getElementById("result").innerText = "Prediction: " + data.result;
+    }
+
+    function startCamera() {
+      const video = document.getElementById("video");
+      navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+        video.srcObject = stream;
+      });
+    }
+
+    window.onload = startCamera;
+  </script>
+</head>
+<body>
+  <h2>📸 Live Webcam Fatigue Detection</h2>
+  <video id="video" width="320" height="240" autoplay></video><br />
+  <button onclick="captureAndSend()">Capture & Predict</button>
+  <p id="result"></p>
+  <canvas id="snapshot" width="320" height="240" style="display:none;"></canvas>
+</body>
+</html>
